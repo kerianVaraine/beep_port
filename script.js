@@ -12,7 +12,6 @@ let backgroundColour = background.style.backgroundColor;
 let playing = false;
 
 function startStop(){
-    console.log('clicked');
     if(!playing){
         playing = true;
         nextNote();
@@ -49,7 +48,7 @@ function playNote(frequency, duration, callback) {
     let n = Math.random() * 500 + 100
     changeColour(Math.floor(n));
     //duration
-    let d = Math.random() * 15 + 1;
+    let d = Math.random() * 10 + 0.2;
     playNote(n, d, nextNote);
      }
  }
