@@ -24,6 +24,9 @@ function changeColour(color){
     document.getElementById("background").style.backgroundColor = "#" + color;
 }
 
+// Seedable random generator
+let seedableRandom = Math.seed(1234);
+
 
 ///////////////////////////////
 // Audio stuff
@@ -41,17 +44,20 @@ function playNote(frequency, duration, callback) {
 	oscillator.start(0);
 	oscillator.stop(audioCtx.currentTime + duration);
 }
+
+// seeded Random so all play cannon
+
  // callback for play note, choose random note, and random duration
 
  function nextNote() {
      if(playing){
-    let n = Math.random() * 500 + 100
-    changeColour(Math.floor(n));
-    //duration
-    let d = Math.random() * 10 + 0.2;
-    playNote(n, d, nextNote);
+    let frequency = seedableRandom() * 500 + 100
+    changeColour(Math.floor(frequency));
+    
+    let duration = Math.random() * 10 + 0.2;
+    playNote(frequency, duration, nextNote);
      }
  }
-
+ 
 
  
