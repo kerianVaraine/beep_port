@@ -40,7 +40,7 @@ function playNote(frequency, duration, callback) {
 	oscillator.type = 'square';
 	oscillator.frequency.value = frequency; // value in hertz
 	oscillator.connect(audioCtx.destination);
-  oscillator.onended = callback;
+    oscillator.onended = callback;
 	oscillator.start(0);
 	oscillator.stop(audioCtx.currentTime + duration);
 }
@@ -55,8 +55,8 @@ function playNote(frequency, duration, callback) {
     changeColour(Math.floor(frequency));
     
     let duration = Math.random() * 10 + 0.2;
-    playNote(frequency, duration, nextNote);
-     }
+        playNote(frequency, duration, nextNote);
+    }
  }
  
 
