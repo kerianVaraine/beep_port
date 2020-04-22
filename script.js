@@ -29,7 +29,7 @@ function addDiv(frequency, duration){
     
     newDiv.setAttribute("style","background-color: #" + Math.ceil(frequency));
     newDiv.style.width = 100 + "vw";
-    newDiv.style.height = Math.ceil(duration) * 30 + "px";
+    newDiv.style.height = Math.ceil(duration) * 5 + "px";
     background.append(newDiv);
 
 }
