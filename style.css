@@ -6,6 +6,8 @@ html {
 body {
     margin:0;
     padding: 0;
+    background-color: #000;
+
 }
 
 #background {
@@ -13,7 +15,7 @@ body {
     padding: 0;
     height: 100vh;
     width: 100vw;
-    background-color: #000;
+    /* background-color: #000; */
 }
 
 div {
