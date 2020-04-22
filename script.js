@@ -8,7 +8,6 @@
 
 //Interaction
 let background = document.getElementById("background");
-let backgroundColour = background.style.backgroundColor;
 let playing = false;
 
 function startStop(){
@@ -24,8 +23,19 @@ function changeColour(color){
     document.getElementById("background").style.backgroundColor = "#" + color;
 }
 
+// adding divs
+function addDiv(frequency, duration){
+    let newDiv = document.createElement("div");
+    
+    newDiv.setAttribute("style","background-color: #" + Math.ceil(frequency));
+    newDiv.style.width = 100 + "vw";
+    newDiv.style.height = Math.ceil(duration) * 30 + "px";
+    background.append(newDiv);
+
+}
+
 // Seedable random generator
-let seedableRandom = Math.seed(1234);
+let seedableRandom = Math.seed(101);
 
 
 ///////////////////////////////
@@ -51,13 +61,21 @@ function playNote(frequency, duration, callback) {
 
  function nextNote() {
      if(playing){
-    let frequency = seedableRandom() * 500 + 100
-    changeColour(Math.floor(frequency));
+    let frequency = seedableRandom() * 500 + 150
+    // changeColour(Math.floor(frequency));
     
     let duration = Math.random() * 10 + 0.2;
         playNote(frequency, duration, nextNote);
+        addDiv(frequency, duration);
+        pageScroll();
     }
  }
  
+//continueous scrolling
+ let scrollDirection = 1, pageScroll;
+ pageScroll = function() {
+     window.scrollBy(0,scrollDirection); // horizontal and vertical scroll increments
+     scrolldelay = setTimeout(pageScroll,5); // scrolls every 100 milliseconds
+ }
 
- 
+ pageScroll(); //need to turn this on or off depending on if playing or not
