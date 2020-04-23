@@ -6,16 +6,29 @@
  */
 
 
+// Seed for note pitches
+/* might be worth making this customizable by user if they like, 
+or default 'composer's choice' option played.
+*/
+let noteSeed = 6420;
+
 //Interaction
 let background = document.getElementById("background");
-let playing = false;
+let playing = 0;
+
+//div height ratio for addDiv function
+let heightDurationRation = 3;
+
+//Note duration multiplier and minimum
+let durationMultiplyer = 10;
+let durationMin = 0.3;
 
 function startStop(){
-    if(!playing){
-        playing = true;
+    if(playing == 0){
+        playing = 1;
         nextNote();
     }else {
-        playing = false;
+        playing = 0;
     }
 }
 
@@ -25,28 +38,31 @@ function changeColour(color){
 
 // adding divs
 function addDiv(frequency, duration){
+    let divHeight = Math.ceil(duration * heightDurationRation);
     let newDiv = document.createElement("div");
     
     newDiv.setAttribute("style","background-color: #" + Math.ceil(frequency));
     newDiv.style.width = 100 + "vw";
-    newDiv.style.height = Math.ceil(duration) * 5 + "px";
+    newDiv.style.height = divHeight + "px";
     background.append(newDiv);
-
+    window.scrollBy(0,divHeight);
 }
 
 // Seedable random generator
-let seedableRandom = Math.seed(101);
+let seedableRandom = Math.seed(noteSeed);
 
 
 ///////////////////////////////
 // Audio stuff
 // create web audio api context
+//////
 var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
+
+// function to init, play and stop oscillator
 function playNote(frequency, duration, callback) {
 	// create Oscillator node
 	var oscillator = audioCtx.createOscillator();
-	
 	oscillator.type = 'square';
 	oscillator.frequency.value = frequency; // value in hertz
 	oscillator.connect(audioCtx.destination);
@@ -56,26 +72,15 @@ function playNote(frequency, duration, callback) {
 }
 
 // seeded Random so all play cannon
-
  // callback for play note, choose random note, and random duration
 
  function nextNote() {
-     if(playing){
+     if(playing == 1){
     let frequency = seedableRandom() * 500 + 150
     // changeColour(Math.floor(frequency));
     
-    let duration = Math.random() * 10 + 0.2;
+    let duration = Math.random() * durationMultiplyer + durationMin;
         playNote(frequency, duration, nextNote);
         addDiv(frequency, duration);
-        pageScroll();
     }
  }
- 
-//continueous scrolling
- let scrollDirection = 1, pageScroll;
- pageScroll = function() {
-     window.scrollBy(0,scrollDirection); // horizontal and vertical scroll increments
-     scrolldelay = setTimeout(pageScroll,5); // scrolls every 100 milliseconds
- }
-
- pageScroll(); //need to turn this on or off depending on if playing or not
